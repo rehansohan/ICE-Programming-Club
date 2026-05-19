@@ -1,0 +1,36 @@
+<!-- Shared navbar fragment -->
+<div class="navbar">
+    <div style="display:flex;align-items:center;gap:15px;">
+        <button class="menu-btn" onclick="toggleMenu()" aria-label="Toggle sidebar menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <strong>ICE Programming Club</strong>
+    </div>
+
+   <div class="nav-actions">
+    {% if user.is_authenticated %}
+        {% if user.is_staff or user.is_superuser %}
+            <a href="{% url 'admin_dashboard'%}" class="nav-btn outline">
+                <i class="fas fa-gauge"></i> Dashboard
+            </a>
+            <a href="{% url 'logout' %}" class="nav-btn solid">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        {% else %}
+            <a href="{% url 'personal_information' %}" class="nav-btn outline">
+                <i class="fas fa-user"></i> Profile
+            </a>
+            <a href="{% url 'logout' %}" class="nav-btn solid">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        {% endif %}
+    {% else %}
+        <a href="{% url 'login' %}" class="nav-btn outline">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </a>
+        <a href="{% url 'register' %}" class="nav-btn solid">
+            <i class="fas fa-user-plus"></i> Sign Up
+        </a>
+    {% endif %}
+   </div>
+</div>

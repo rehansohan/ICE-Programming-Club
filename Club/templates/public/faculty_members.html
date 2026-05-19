@@ -1,0 +1,263 @@
+{% extends "navbar.html" %}
+
+{% block title %}Our Faculty | ICE Programming Club{% endblock %}
+
+
+{% block content %}
+<style>
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #3730a3;
+    --accent: #10b981;
+    --gray: #6b7280;
+    --light-gray: #f3f4f6;
+    --white: #ffffff;
+    --radius: 14px;
+    --transition: all 0.3s ease;
+    --shadow: 0 6px 18px rgba(0,0,0,0.08);
+    --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+body {
+    background: var(--light-gray);
+    font-family: 'Poppins', sans-serif;
+    color: var(--gray);
+}
+
+/* ===== Container & Header ===== */
+.container {
+    max-width: 1200px;
+    margin: 80px auto 40px;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.page-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+.page-subtitle {
+    font-size: 1.1rem;
+    color: var(--gray);
+    margin-bottom: 50px;
+}
+
+/* ===== Section Titles ===== */
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 25px;
+    border-left: 4px solid var(--accent);
+    padding-left: 0.5rem;
+    display: inline-block;
+}
+
+/* ===== Faculty Grid ===== */
+.faculty-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-bottom: 60px;
+}
+
+/* ===== Faculty Card ===== */
+.faculty-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+}
+.faculty-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ===== Card Header ===== */
+.card-header {
+    text-align: center;
+    padding: 20px 15px 10px;
+}
+.faculty-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 12px;
+    border: 3px solid var(--primary);
+}
+.faculty-name {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #111827;
+}
+.faculty-designation {
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+.faculty-designation.professor { color: #d97706; } /* orange */
+.faculty-designation.assistant { color: var(--primary); }
+.faculty-designation.lecturer { color: #16a34a; }
+
+.faculty-department {
+    font-size: 0.85rem;
+    color: var(--gray);
+}
+
+/* ===== Skills ===== */
+.faculty-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin: 12px 0;
+}
+.skill-tag {
+    background: #e0f2fe;
+    color: #0284c7;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+.skill-tag:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* ===== Social Links ===== */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+.social-links a {
+    color: var(--primary);
+    font-size: 0.9rem;
+    text-decoration: none;
+    font-weight: 500;
+}
+.social-links a:hover {
+    text-decoration: underline;
+}
+
+/* ===== Contact Button ===== */
+.connect-btn {
+    display: inline-block;
+    padding: 8px 20px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+}
+.connect-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .faculty-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+<div class="container">
+    <h1 class="page-title">Our Faculty</h1>
+    <p class="page-subtitle">Meet the talented faculty members guiding ICE Programming Club</p>
+
+    <!-- Professors -->
+    <div class="faculty-section">
+        <h2 class="section-title">Professors</h2>
+        <div class="faculty-grid">
+            {% for i in "1234"|make_list %}
+            <div class="faculty-card">
+                <div class="card-header">
+                    <img src="https://randomuser.me/api/portraits/men/{{ forloop.counter }}.jpg" class="faculty-avatar" alt="Professor {{ forloop.counter }}">
+                    <div class="faculty-name">Prof. John {{ forloop.counter }}</div>
+                    <div class="faculty-designation professor">Professor</div>
+                    <div class="faculty-department">Department of Computer Science</div>
+                </div>
+                <div class="faculty-skills">
+                    <span class="skill-tag">C++</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">AI/ML</span>
+                </div>
+                <div class="social-links">
+                    <a href="#">GitHub</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Email</a>
+                </div>
+                <div class="connect-btn">Contact</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Assistant Professors -->
+    <div class="faculty-section">
+        <h2 class="section-title">Assistant Professors</h2>
+        <div class="faculty-grid">
+            {% for i in "12345"|make_list %}
+            <div class="faculty-card">
+                <div class="card-header">
+                    <img src="https://randomuser.me/api/portraits/women/{{ forloop.counter }}.jpg" class="faculty-avatar" alt="Assistant Professor {{ forloop.counter }}">
+                    <div class="faculty-name">Asst. Prof. Jane {{ forloop.counter }}</div>
+                    <div class="faculty-designation assistant">Assistant Professor</div>
+                    <div class="faculty-department">Department of Computer Science</div>
+                </div>
+                <div class="faculty-skills">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Data Science</span>
+                    <span class="skill-tag">ML</span>
+                </div>
+                <div class="social-links">
+                    <a href="#">GitHub</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Email</a>
+                </div>
+                <div class="connect-btn">Contact</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Lecturers -->
+    <div class="faculty-section">
+        <h2 class="section-title">Lecturers</h2>
+        <div class="faculty-grid">
+            {% for i in "123456"|make_list %}
+            <div class="faculty-card">
+                <div class="card-header">
+                    <img src="https://randomuser.me/api/portraits/men/{{ forloop.counter|add:"4" }}.jpg" class="faculty-avatar" alt="Lecturer {{ forloop.counter }}">
+                    <div class="faculty-name">Lecturer Mark {{ forloop.counter }}</div>
+                    <div class="faculty-designation lecturer">Lecturer</div>
+                    <div class="faculty-department">Department of Computer Science</div>
+                </div>
+                <div class="faculty-skills">
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">Web Dev</span>
+                    <span class="skill-tag">Python</span>
+                </div>
+                <div class="social-links">
+                    <a href="#">GitHub</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Email</a>
+                </div>
+                <div class="connect-btn">Contact</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

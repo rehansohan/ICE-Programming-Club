@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard | ICE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --bg:#f4f6f9;
+    --text:#1e293b;
+    --sidebar-bg:#fff;
+    --sidebar-hover:#f5f7fb;
+}
+*{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif;}
+html, body{height:100%; background:var(--bg); scroll-behavior: smooth;}
+a{text-decoration:none;}
+
+/* NAVBAR */
+.navbar{
+    position:fixed; top:0; left:0; right:0; height:70px;
+    background:linear-gradient(90deg,var(--primary),var(--primary-dark));
+    display:flex; align-items:center; padding:0 30px; color:#fff; z-index:100;
+}
+.navbar h1{font-size:1.6rem; font-weight:800;}
+.nav-actions{margin-left:auto; display:flex; gap:12px;}
+.nav-btn{padding:6px 14px; border-radius:20px; font-size:13px; font-weight:600; border:none; cursor:pointer;}
+.nav-btn.outline{background:transparent; border:1px solid rgba(255,255,255,.6); color:#fff;}
+.nav-btn.solid{background:#fff; color:var(--primary);}
+.nav-btn:hover{opacity:0.9;}
+
+/* LAYOUT */
+.layout{position:absolute; top:70px; bottom:0; left:0; right:0; display:grid; grid-template-columns:250px 1fr; transition:.3s;}
+
+/* SIDEBAR */
+.sidebar{
+    background:var(--sidebar-bg); border-right:1px solid #e0e0e0; overflow-y:auto;
+}
+.sidebar::-webkit-scrollbar{width:8px;}
+.sidebar::-webkit-scrollbar-thumb{background:#c5cbd3; border-radius:10px;}
+.sidebar::-webkit-scrollbar-thumb:hover{background:#9aa3ad;}
+.sidebar::-webkit-scrollbar-track{background:#f0f0f0;}
+.sidebar a.nav-item{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:14px 20px; color:var(--text); font-weight:600; border-bottom:1px solid #f0f0f0; cursor:pointer;
+}
+.sidebar a.nav-item:hover{background:var(--sidebar-hover);}
+
+/* DROPDOWN */
+.nav-dropdown{display:flex; flex-direction:column;}
+.nav-dropdown .dropdown-content{display:none; flex-direction:column; background:#1565c0; margin-left:10px; border-radius:5px; overflow:hidden;}
+.nav-dropdown .dropdown-content a{padding:12px 20px; color:#fff; font-size:0.9rem; border-bottom:1px solid rgba(255,255,255,0.1);}
+.nav-dropdown .dropdown-content a:hover{background:#0d47a1;}
+.nav-dropdown.open > .nav-item i{transform:rotate(90deg);}
+.nav-dropdown > .nav-item i{transition:transform 0.3s;}
+
+/* MAIN CONTENT */
+.content{overflow-y:auto; height:100%; padding:20px; line-height:1.6;}
+.content::-webkit-scrollbar{width:8px;}
+.content::-webkit-scrollbar-thumb{background:#c5cbd3; border-radius:10px;}
+.content::-webkit-scrollbar-thumb:hover{background:#9aa3ad;}
+.content::-webkit-scrollbar-track{background:#f0f0f0;}
+
+/* STATS */
+.stats-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1rem; margin-bottom:2rem;}
+.stat-block{padding:10px; background:#fff; border-radius:8px; display:flex; flex-direction:column; align-items:flex-start; color:var(--text);}
+.stat-block h3{margin-bottom:4px; font-size:1.4rem;}
+.stat-block span{font-size:.85rem; color:#64748b;}
+
+/* TABLE */
+.table-container{background:#fff; padding:1rem; border-radius:8px; overflow-x:auto;}
+table{width:100%; border-collapse:collapse;}
+th, td{padding:.8rem; border-bottom:1px solid #e5e7eb; text-align:left;}
+th{background:#f8fafc; font-weight:700;}
+tr:hover{background:#f1f5f9;}
+.profile-img{width:40px; height:40px; border-radius:50%; object-fit:cover;}
+.status{padding:.3rem .6rem; border-radius:20px; font-size:.75rem; font-weight:700;}
+.status.active{background:rgba(16,185,129,.15); color:#059669;}
+.status.alumni{background:rgba(245,158,11,.15); color:#d97706;}
+.view-btn{background:var(--primary); color:#fff; padding:.3rem .6rem; border-radius:6px; text-decoration:none; font-size:.75rem;}
+.view-btn:hover{opacity:0.9;}
+.delete-btn{background:#e53935; color:#fff; padding:.3rem .6rem; border-radius:6px; text-decoration:none; font-size:.75rem;}
+.delete-btn:hover{opacity:0.9;}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h1>ICE Admin</h1>
+    <div class="nav-actions">
+       
+        <a href="{% url 'logout' %}" class="nav-btn outline">Logout</a>
+    </div>
+    
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <a href="#" class="nav-item"><span>Dashboard</span><i class="fas fa-tachometer-alt"></i></a>
+        <a href="{% url 'home'%}" class="nav-item"><span>Home</span><i class="fas fa-tachometer-alt"></i></a>
+        <a href="{% url 'admin-main-page'%}" class="nav-item"><span>Main Page</span><i class="fas fa-users"></i></a>
+        <a href="{% url 'admin_community'%}" class="nav-item"><span>Community Page</span><i class="fas fa-users"></i></a>
+        <a href="{% url 'admin_notice_list'%}" class="nav-item"><span>Notice</span><i class="fas fa-users"></i></a>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+        <h2>Admin Dashboard</h2>
+
+        <!-- STATS SECTION -->
+        <div class="stats-grid">
+            <div class="stat-block">
+                <h3>{{ total_users }}</h3>
+                <span>Total Users</span>
+            </div>
+            <div class="stat-block">
+                <h3>{{ active_members }}</h3>
+                <span>Active Members</span>
+            </div>
+            <div class="stat-block">
+                <h3>{{ alumni_count }}</h3>
+                <span>Alumni</span>
+            </div>
+            <div class="stat-block">
+                <h3>{{ total_skills }}</h3>
+                <span>Total Skills</span>
+            </div>
+        </div>
+
+        <!-- FILTER FORM -->
+        <form method="get" class="filter-bar">
+            {{ form.session }}
+            <button type="submit">Filter</button>
+        </form>
+
+        <!-- MEMBERS TABLE -->
+        <div class="table-container">
+            <h3>Club Members</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Profile</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Session</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in members %}
+                    <tr>
+                        <td>
+                            <img src="{% if member.profile_picture %}{{ member.profile_picture.url }}{% else %}{% static 'images/default_avatar.png' %}{% endif %}" class="profile-img">
+                        </td>
+                        <td>{{ member.user.name }}</td>
+                        <td>{{ member.user.email }}</td>
+                        <td>{{ member.session.year }}</td>
+                        <td>
+                            <span class="status {% if member.status == 'active' %}active{% else %}alumni{% endif %}">
+                                {{ member.status|capfirst }}
+                            </span>
+                        </td>
+                        <td>
+                            <a href="{% url 'admin_user_detail' member.user_id %}" class="view-btn">View</a>
+                            
+                            <!-- Delete Button -->
+                          
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" style="text-align:center; color:#64748b;">No members found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<script>
+const dropdowns = document.querySelectorAll('.nav-dropdown > .nav-item');
+dropdowns.forEach(drop => {
+    drop.addEventListener('click', function(e){
+        e.preventDefault();
+        const parent = this.parentElement;
+        parent.classList.toggle('open');
+        const content = this.nextElementSibling;
+        content.style.display = content.style.display === "flex" ? "none" : "flex";
+    });
+});
+</script>
+
+</body>
+</html>

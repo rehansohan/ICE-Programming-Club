@@ -1,0 +1,154 @@
+{% extends "Core_templates/index.html" %}
+{% block title %}My Profile{% endblock %}
+
+{% block extra_css %}
+<style>
+body{
+    background:#f6f7fb;
+    font-family:Segoe UI, Helvetica, Arial, sans-serif;
+    zoom:1.05; /* GLOBAL ZOOM */
+}
+
+/* LAYOUT */
+.profile-page{
+    max-width:1300px;
+    margin:3rem auto;
+    display:grid;
+    grid-template-columns:360px 1fr; /* MORE LEFT SPACE */
+    gap:3.5rem;
+    padding:0 1.5rem;
+}
+
+/* LEFT MENU */
+.profile-menu{
+    background:white;
+    border-radius:16px;
+    padding:2rem 0;
+}
+.profile-menu h3{
+    padding:0 2.2rem 1.2rem;
+    font-size:1.35rem;
+}
+.menu-item{
+    display:flex;
+    align-items:center;
+    gap:1.1rem;
+    padding:1.15rem 2.2rem;
+    font-size:1rem;
+    color:#111827;
+    font-weight:500;
+    cursor:pointer;
+}
+.menu-item:hover{
+    background:#f3f4f6;
+}
+.menu-item.active{
+    background:#f3f0ff;
+    border-left:5px solid #6d28d9;
+}
+
+/* RIGHT CONTENT */
+.profile-content h2{
+    font-size:1.6rem;
+    margin-bottom:2rem;
+}
+
+/* AVATAR */
+.avatar{
+    display:flex;
+    justify-content:center;
+    margin-bottom:2.5rem;
+}
+.avatar img{
+    width:165px;
+    height:165px;
+    border-radius:50%;
+    background:#e5e7eb;
+}
+
+/* FORM */
+.form-group{
+    margin-bottom:1.6rem;
+}
+.form-group label{
+    font-size:1rem;
+    font-weight:600;
+    display:block;
+    margin-bottom:.5rem;
+}
+.form-group input{
+    width:100%;
+    padding:1rem 1.2rem;
+    border-radius:10px;
+    border:none;
+    background:#f1f5f9;
+    font-size:1rem;
+}
+
+/* LINK */
+.link{
+    margin-top:1.2rem;
+}
+.link a{
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:600;
+    font-size:.95rem;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+    body{zoom:1;}
+    .profile-page{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+
+    <!-- LEFT MENU -->
+    <div class="profile-menu">
+        <h3>My profile</h3>
+
+        <div class="menu-item active">👤 Personal Information</div>
+        <div class="menu-item">📍 Address</div>
+        <div class="menu-item">🎓 Education</div>
+        <div class="menu-item">💼 Job Profile</div>
+        <div class="menu-item">🧑‍💻 Job Experience</div>
+        <div class="menu-item">🧠 Skill Set</div>
+        <div class="menu-item">🔗 Important Links</div>
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="profile-content">
+        <h2>Personal Information</h2>
+
+        <div class="avatar">
+            <img src="" alt="Profile">
+        </div>
+
+        <div class="form-group">
+            <label>Student ID:</label>
+            <input type="text" value="N/A" disabled>
+        </div>
+
+        <div class="form-group">
+            <label>Full name</label>
+            <input type="text" value="Emon Hossen Sohan">
+        </div>
+
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" value="5303@gmail.com" disabled>
+        </div>
+
+        <div class="link">
+            <a href="#">Change Password</a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,204 @@
+{% extends "navbar.html" %}
+
+{% block title %}Learning & Resources | ICE Programming Club{% endblock %}
+
+{% block content %}
+<style>
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #3730a3;
+    --accent: #10b981;
+    --gray: #6b7280;
+    --light-gray: #f3f4f6;
+    --white: #ffffff;
+    --radius: 10px;
+    --transition: all 0.3s ease;
+}
+
+body {
+    background: var(--light-gray);
+    font-family: 'Poppins', sans-serif;
+    color: var(--gray);
+}
+
+/* ===== Container & Header ===== */
+.container {
+    max-width: 1100px;
+    margin: 80px auto 40px;
+    padding: 0 20px;
+}
+
+.page-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: var(--gray);
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+/* ===== Section Titles ===== */
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 25px;
+    border-left: 4px solid var(--accent);
+    padding-left: 0.5rem;
+    display: inline-block;
+}
+
+/* ===== Resource List ===== */
+.resource-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.resource-list li {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+    transition: var(--transition);
+}
+
+.resource-list li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.resource-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.resource-title {
+    font-weight: 600;
+    color: #111827;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.resource-description {
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+
+.resource-tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.tag {
+    background: #e0f2fe;
+    color: #0284c7;
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+.tag:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+.resource-actions a {
+    margin-left: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--primary);
+    transition: var(--transition);
+}
+.resource-actions a:hover {
+    color: var(--primary-dark);
+}
+</style>
+
+<div class="container">
+    <h1 class="page-title">Learning & Resources</h1>
+    <p class="page-subtitle">Access tutorials, guides, and resources shared by our community</p>
+
+    <!-- Tutorials Section -->
+    <div class="resource-section">
+        <h2 class="section-title">Tutorials</h2>
+        <ul class="resource-list">
+            {% for i in "1234"|make_list %}
+            <li>
+                <div class="resource-info">
+                    <div class="resource-title">Tutorial {{ forloop.counter }}: Intro to Python</div>
+                    <div class="resource-description">Step-by-step Python programming guide for beginners.</div>
+                    <div class="resource-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Beginner</span>
+                    </div>
+                </div>
+                <div class="resource-actions">
+                    <a href="#">View</a>
+                    <a href="#">Download</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Guides Section -->
+    <div class="resource-section">
+        <h2 class="section-title">Guides</h2>
+        <ul class="resource-list">
+            {% for i in "123"|make_list %}
+            <li>
+                <div class="resource-info">
+                    <div class="resource-title">Guide {{ forloop.counter }}: Git & GitHub</div>
+                    <div class="resource-description">Learn version control and collaboration with Git & GitHub.</div>
+                    <div class="resource-tags">
+                        <span class="tag">Git</span>
+                        <span class="tag">Version Control</span>
+                    </div>
+                </div>
+                <div class="resource-actions">
+                    <a href="#">View</a>
+                    <a href="#">Download</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Videos Section -->
+    <div class="resource-section">
+        <h2 class="section-title">Video Tutorials</h2>
+        <ul class="resource-list">
+            {% for i in "123"|make_list %}
+            <li>
+                <div class="resource-info">
+                    <div class="resource-title">Video {{ forloop.counter }}: Data Structures in C++</div>
+                    <div class="resource-description">Concise video explaining arrays, linked lists, and trees in C++.</div>
+                    <div class="resource-tags">
+                        <span class="tag">C++</span>
+                        <span class="tag">DSA</span>
+                        <span class="tag">Video</span>
+                    </div>
+                </div>
+                <div class="resource-actions">
+                    <a href="#">Watch</a>
+                    <a href="#">Download</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

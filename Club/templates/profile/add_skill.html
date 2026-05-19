@@ -1,0 +1,128 @@
+{% extends "profile/profile_index.html" %}
+
+{% block skills_active %}active{% endblock %}
+
+{% block profile_content %}
+<style>
+/* Form container */
+.skill-container {
+    max-width: 520px;
+    margin: 2.5rem auto;
+    padding: 2rem;
+    border: 2px solid #d1d5db;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+/* Page title */
+.skill-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #111827;
+}
+
+/* Form fields */
+.skill-form .form-group {
+    margin-bottom: 1.6rem;
+}
+
+.skill-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #374151;
+}
+
+.skill-form input,
+.skill-form select,
+.skill-form textarea {
+    width: 100%;
+    padding: 0.9rem 1.1rem;
+    border: 2px solid #d1d5db;
+    border-radius: 8px;
+    background: #f9fafb;
+    font-size: 0.95rem;
+    transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.skill-form input:focus,
+.skill-form select:focus,
+.skill-form textarea:focus {
+    outline: none;
+    border-color: #4f46e5;
+    background: #ffffff;
+}
+
+.skill-form textarea {
+    resize: vertical;
+}
+
+/* Submit button */
+.skill-form button {
+    margin-top: 1rem;
+    padding: 0.75rem 1.8rem;
+    border: 2px solid #4f46e5;
+    background: white;
+    color: #4f46e5;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.skill-form button:hover {
+    background: #4f46e5;
+    color: white;
+}
+
+/* Back link */
+.back-link {
+    display: inline-block;
+    margin-top: 1.8rem;
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+</style>
+
+<div class="skill-container">
+    <h2 class="skill-title">
+        {% if form.instance.pk %}Edit Skill{% else %}Add Skill{% endif %}
+    </h2>
+
+    <form method="post" class="skill-form">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="form-group">
+            <label>Skill Name</label>
+            {{ form.skill_name.errors }}
+            {{ form.skill_name }}
+        </div>
+
+        <div class="form-group">
+            <label>Experience</label>
+            {{ form.experience.errors }}
+            {{ form.experience }}
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            {{ form.description.errors }}
+            {{ form.description }}
+        </div>
+
+        <button type="submit">
+            {% if form.instance.pk %}Update Skill{% else %}Add Skill{% endif %}
+        </button>
+    </form>
+
+    <a class="back-link" href="{% url 'show_skill' %}">← Back to My Skills</a>
+</div>
+
+{% endblock %}

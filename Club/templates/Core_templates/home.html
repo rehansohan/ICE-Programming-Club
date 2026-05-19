@@ -1,0 +1,235 @@
+{% extends "Core_templates/index.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+/* HERO SECTION */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 400px; /* fixed height */
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 1;
+}
+
+.hero-slide.active {
+    opacity: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  
+    padding: 30px 50px;
+    border-radius: 10px;
+    text-align: left;
+    max-width: 80%;
+}
+
+.hero h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.hero p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.hero-actions a {
+    text-decoration: none;
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0 10px;
+}
+
+.btn-primary { background: #fff; color: #1565c0; }
+.btn-outline { border: 1px solid #fff; color: #fff; }
+
+#mission-vision-section:target,
+#about-section:target,
+#contact-section:target {
+    background-color: #fff3c4;
+    transition: background 2s;
+}
+
+/* CONTENT CARDS */
+.card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.card:hover { background: #fffbea; }
+
+.contact-info { line-height: 1.7; }
+</style>
+
+<!-- HERO SLIDER -->
+<div class="hero">
+    {% if hero_images %}
+        {% for img in hero_images %}
+        <div class="hero-slide{% if forloop.first %} active{% endif %}" 
+             style="background-image: url('{{ img.url }}');"></div>
+        {% endfor %}
+    {% else %}
+        <div class="hero-slide active" 
+             style="background: linear-gradient(135deg, #1e88e5, #1565c0);"></div>
+    {% endif %}
+
+    <div class="hero-overlay">
+        <h1>{{ content.hero_title }}</h1>
+        <p>{{ content.hero_text }}</p>
+        <div class="hero-actions">
+            <a href="#about-section" class="btn-primary">About the Club</a>
+            <a href="#contact-section" class="btn-outline">Contact Us</a>
+        </div>
+    </div>
+</div>
+
+<!-- MISSION & VISION -->
+<section id="mission-vision-section" class="card">
+    <div class="mv-card mission">
+        <h2>Our Mission</h2>
+        <p>{{ content.mission_text }}</p>
+    </div>
+
+    <div class="mv-card vision" style="margin-top:20px;">
+        <h2>Our Vision</h2>
+        <p>{{ content.vision_text }}</p>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<div class="card" id="about-section">
+    <h2>About the Club</h2>
+    <p style="color:#555;line-height:1.7;">
+        {{ content.about_text }}
+    </p>
+</div>
+
+<div class="card">
+    <h3>What We Do</h3>
+    <ul style="color:#555;line-height:1.8;">
+        <li> Competitive Programming Practice</li>
+        <li> ICPC & Online Judge Training</li>
+        <li> Algorithm & Data Structure Sessions</li>
+        <li> Project-Based Learning</li>
+    </ul>
+</div>
+
+<!-- CONTACT -->
+<div class="card" id="contact-section">
+    <h2>Contact Us</h2>
+    <div class="contact-info">
+        <p>Email: <a href="mailto:club@nstu.edu">club@nstu.edu</a></p>
+        <p>Phone: +880123456789</p>
+        <p>Address: Noakhali Science and Technology University, Bangladesh</p>
+    </div>
+</div>
+
+<div style="height:200px;"></div> <!-- spacing at bottom -->
+
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.hero-slide');
+
+function showSlide(index) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    slides[index].classList.add('active');
+}
+
+// Auto-rotate every 5 seconds
+setInterval(() => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+}, 5000);
+</script>
+
+{% endblock %}
+
+
+{% block right_sidebar %}
+<style>
+.notice-box {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+.notice-header {
+    padding: 12px 15px;
+    font-weight: 700;
+    background: #eef3fb;
+    border-bottom: 1px solid var(--border);
+}
+.notice-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+.notice-item span {
+    display: block;
+    font-size: 12px;
+    color: #777;
+}
+.notice-item:hover { background: #f5f7fb; }
+
+/* Highlight pinned notice */
+.notice-item.pinned {
+    background: #fff7cc;
+    font-weight: bold;
+    border-left: 4px solid #f5c518;
+}
+</style>
+
+<div class="notice-box">
+    <div class="notice-header">
+        <i class="fas fa-bullhorn"></i> Important Notices
+    </div>
+
+    <!-- Pinned notice -->
+    {% if pinned_notice %}
+    <div class="notice-item pinned">
+        📌 <a href="{% url 'notice_detail' pinned_notice.id %}">
+            {{ pinned_notice.title }}
+        </a>
+        <span>{{ pinned_notice.date }}</span>
+    </div>
+    {% endif %}
+
+    <!-- Other notices -->
+    {% for notice in notices %}
+    <div class="notice-item">
+        <a href="{% url 'notice_detail' notice.id %}">
+            {{ notice.title }}
+        </a>
+        <span>{{ notice.date }}</span>
+    </div>
+    {% endfor %}
+
+    <div style="height:200px;"></div> <!-- optional spacing -->
+</div>
+{% endblock %}

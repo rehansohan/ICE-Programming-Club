@@ -1,0 +1,177 @@
+{% extends "navbar.html" %}
+{% load static %}
+
+{% block title %}Community Members | ICE Programming Club{% endblock %}
+
+{% block content %}
+
+<!-- Font Awesome -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+:root {
+    --primary: #2563eb;
+    --text-dark: #111827;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+}
+
+/* Layout */
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.page-subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+}
+
+/* Role title */
+.section-title {
+    margin: 40px 0 18px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    border-left: 4px solid var(--primary);
+    padding-left: 12px;
+}
+
+/* Grid */
+.member-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 22px;
+}
+
+/* Card */
+.member-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px 18px 20px;
+    text-align: center;
+    box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.member-card:hover {
+    transform: translateY(-6px);
+}
+
+/* Avatar */
+.member-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 14px;
+}
+
+/* Info */
+.member-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.member-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.member-bio {
+    font-size: 0.85rem;
+    color: #374151;
+    margin: 10px 0 14px;
+}
+
+/* Social links */
+.member-links {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 6px;
+}
+
+.member-links a {
+    color: #6b7280;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.member-links a:hover {
+    color: var(--primary);
+}
+</style>
+
+<div class="container">
+    <h1 class="page-title">Our committee Members</h1>
+    <p class="page-subtitle">Meet the active members of ICE Programming Club</p>
+
+    {% for role in roles_with_members %}
+        <h2 class="section-title">{{ role.name }}</h2>
+
+        {% if role.members.all %}
+        <div class="member-list">
+            {% for member in role.members.all %}
+            <div class="member-card">
+
+                <img src="{% if member.image %}{{ member.image.url }}{% else %}{% static 'images/default_avatar.png' %}{% endif %}"
+                     class="member-avatar"
+                     alt="{{ member.name }}">
+
+                <div class="member-name">{{ member.name }}</div>
+
+                <div class="member-meta">
+                    {{ role.name }} • Year {{ member.year }}
+                    {% if member.department %} • {{ member.department }}{% endif %}
+                </div>
+
+                <div class="member-bio">
+                    {{ member.bio|default:"No bio available." }}
+                </div>
+
+                <div class="member-links">
+                    {% if member.facebook %}
+                        <a href="{{ member.facebook }}" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    {% endif %}
+
+                    {% if member.twitter %}
+                        <a href="{{ member.twitter }}" target="_blank">
+                            <i class="fab fa-x-twitter"></i>
+                        </a>
+                    {% endif %}
+
+                    {% if member.linkedin %}
+                        <a href="{{ member.linkedin }}" target="_blank">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    {% endif %}
+
+                    {% if member.email %}
+                        <a href="mailto:{{ member.email }}">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    {% endif %}
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <p style="color:#6b7280;">No members in this role yet.</p>
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% endblock %}

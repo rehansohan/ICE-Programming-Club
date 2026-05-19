@@ -1,0 +1,84 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+  <div class="col-lg-8">
+    <div class="hero bg-light p-4 rounded mb-4">
+      <h1 class="mb-1">News & Blogs</h1>
+      <p class="mb-3 text-muted">Stay updated with club activities, workshops, competitive programming updates, and technical blogs.</p>
+      <form class="d-flex" method="get" action="{% url 'blog_search' %}">
+        <input class="form-control me-2" name="q" placeholder="Search blog posts" value="{{ search_query|default:'' }}">
+        <button class="btn btn-primary">Search</button>
+      </form>
+    </div>
+
+    {% if posts %}
+      <div class="row">
+        {% for post in posts %}
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 shadow-sm">
+            {% if post.thumbnail %}
+            <img src="{{ post.thumbnail.url }}" class="card-img-top" alt="{{ post.title }}">
+            {% endif %}
+            <div class="card-body">
+              <a class="badge bg-primary text-white mb-2" href="{% url 'blog_category' post.category.slug %}">{{ post.category.name }}</a>
+              <h5 class="card-title">{{ post.title }}</h5>
+              <p class="card-text text-muted">{{ post.short_description }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">By {{ post.author.get_full_name|default:post.author.username }} • {{ post.created_at|date:"M d, Y" }} • {{ post.read_time }} min read</small>
+                <a href="{% url 'blog_detail' post.slug %}" class="btn btn-sm btn-outline-primary">Read More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <nav>
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+          {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% else %}
+      <div class="empty-state text-center py-5">
+        <h3>No posts found</h3>
+        <p class="text-muted">Try another search, or check back later for new posts.</p>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card mb-4 p-3">
+      <h6>Categories</h6>
+      <div class="d-flex flex-wrap">
+        {% for cat in categories %}
+          <a href="{% url 'blog_category' cat.slug %}" class="btn btn-sm btn-outline-secondary me-2 mb-2">{{ cat.name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="card mb-3 p-3">
+      <h6>Recent Posts</h6>
+      <ul class="list-unstyled">
+        {% for r in recent_posts %}
+          <li class="mb-2"><a href="{% url 'blog_detail' r.slug %}">{{ r.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="card mb-3 p-3">
+      <h6>Popular Posts</h6>
+      <ul class="list-unstyled">
+        {% for p in popular_posts %}
+          <li class="mb-2"><a href="{% url 'blog_detail' p.slug %}">{{ p.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

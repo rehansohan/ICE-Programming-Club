@@ -1,0 +1,12 @@
+{% extends "Core_templates/index.html" %}
+{% block title %}{{ action }} Notice{% endblock %}
+
+{% block content %}
+<h2>{{ action }} Notice</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{{ action }}</button>
+</form>
+<a href="{% url 'admin_notice_list' %}">⬅ Back to List</a>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "navbar.html" %}
+{% block title %}Delete Member | ICE Programming Club{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 600px; margin: 50px auto; padding: 30px; background: white; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    <h1 class="page-title" style="color: #ef4444;">Confirm Deletion</h1>
+    <p style="font-size: 1.1rem; margin: 20px 0;">Are you sure you want to delete <strong>{{ member.name }}</strong>?</p>
+    <p style="color: #6b7280;">This action cannot be undone.</p>
+
+    <form method="post" style="margin-top:30px; display: flex; gap: 15px;">
+        {% csrf_token %}
+        <button type="submit" class="connect-btn" style="background:#ef4444; cursor: pointer; border: none; flex: 1;">Yes, Delete</button>
+        <a href="{% url 'admin_community' %}" class="connect-btn" style="background:#10b981; text-align: center; flex: 1;">Cancel</a>
+    </form>
+</div>
+{% endblock %}

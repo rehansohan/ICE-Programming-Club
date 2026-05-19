@@ -1,0 +1,28 @@
+{% extends "profile/profile_index.html" %}
+{% block judge_active %}active{% endblock %}
+
+{% block profile_content %}
+<h2>My Online Judge Handles</h2>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Platform</th>
+        <th>Handle</th>
+    </tr>
+    <tr>
+        <td>Codeforces</td>
+        <td>{{ member.codeforces_handle|default:"Not set" }}</td>
+    </tr>
+    <tr>
+        <td>CodeChef</td>
+        <td>{{ member.codechef_handle|default:"Not set" }}</td>
+    </tr>
+    <tr>
+        <td>AtCoder</td>
+        <td>{{ member.atcoder_handle|default:"Not set" }}</td>
+    </tr>
+</table>
+
+<br>
+<a href="{% url 'edit_handles' %}">✏️ Edit Handles</a>
+{% endblock %}

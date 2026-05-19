@@ -1,0 +1,12 @@
+{% extends "Core_templates/index.html" %}
+{% block title %}Delete Notice{% endblock %}
+
+{% block content %}
+<h2>Delete Notice</h2>
+<p>Are you sure you want to delete: <strong>{{ notice.title }}</strong>?</p>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Yes, Delete</button>
+    <a href="{% url 'admin_notice_list' %}">Cancel</a>
+</form>
+{% endblock %}

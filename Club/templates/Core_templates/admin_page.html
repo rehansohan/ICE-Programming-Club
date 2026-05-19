@@ -1,0 +1,261 @@
+{% extends "Core_templates/index.html" %}
+
+{% block title %}Admin Panel | ICE Programming Club{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ===== LAYOUT ===== */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f1f5f9;
+    margin: 0;
+}
+
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ===== SIDEBAR ===== */
+.admin-sidebar {
+    width: 250px;
+    background: #1e3a8a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1rem;
+}
+
+.admin-sidebar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.admin-sidebar a {
+    color: white;
+    text-decoration: none;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    display: block;
+    margin-bottom: 0.5rem;
+    transition: 0.3s;
+}
+
+.admin-sidebar a:hover,
+.admin-sidebar a.active {
+    background: #2563eb;
+}
+
+/* ===== MAIN CONTENT ===== */
+.admin-main {
+    flex: 1;
+    padding: 2rem;
+}
+
+/* ===== HEADER ===== */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.admin-header h1 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.admin-header .admin-user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.admin-header .admin-user img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* ===== DASHBOARD CARDS ===== */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #2563eb;
+}
+
+.card p {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* ===== TABLE ===== */
+.table-container {
+    margin-top: 2rem;
+    background: white;
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    overflow-x: auto;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+    padding: 0.8rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table-container th {
+    background: #2563eb;
+    color: white;
+    border-radius: 10px;
+}
+
+/* Skill badges */
+.skill-badge {
+    background: #e0e7ff;
+    color: #1e40af;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    margin: 0.1rem;
+    display: inline-block;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+    .admin-container {
+        flex-direction: column;
+    }
+    .admin-sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+    }
+    .admin-sidebar a {
+        flex: 1;
+        text-align: center;
+        margin-bottom: 0;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="admin-sidebar">
+        <h2>ICE Club Admin</h2>
+        <a href="" class="{% if request.path == '/admin-dashboard/' %}active{% endif %}">Dashboard</a>
+        <a href="{% url 'user_list' %}" class="{% if request.path == '/admin-users/' %}active{% endif %}">Users</a>
+        <a href="" class="{% if request.path == '/admin-sessions/' %}active{% endif %}">Sessions</a>
+        <a href="" class="{% if request.path == '/admin-skills/' %}active{% endif %}">Skills</a>
+        <a href="">Logout</a>
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <main class="admin-main">
+
+        <!-- HEADER -->
+        <div class="admin-header">
+            <h1>Dashboard</h1>
+            <div class="admin-user">
+                {% if request.user.member.profile_picture %}
+                    <img src="" alt="Admin">
+                {% else %}
+                    <img src="/media/default_profile.png" alt="Admin">
+                {% endif %}
+                <span>{{ request.user.name }}</span>
+            </div>
+        </div>
+
+        <!-- DASHBOARD CARDS -->
+        <div class="dashboard-cards">
+            <div class="card">
+                <h3>Total Users</h3>
+                <p>{{ total_users|default:0 }}</p>
+            </div>
+            <div class="card">
+                <h3>Active Members</h3>
+                <p>{{ active_members|default:0 }}</p>
+            </div>
+            <div class="card">
+                <h3>Alumni</h3>
+                <p>{{ alumni_count|default:0 }}</p>
+            </div>
+            <div class="card">
+                <h3>Total Skills</h3>
+                <p>{{ total_skills|default:0 }}</p>
+            </div>
+        </div>
+
+        <!-- USER TABLE -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Profile</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Student ID</th>
+                        <th>Department</th>
+                        <th>Session</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Skills</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in members %}
+                    <tr>
+                        <td>
+                            {% if member.profile_picture %}
+                                <img src="" alt="Profile" style="width:35px; height:35px; border-radius:50%; object-fit:cover;">
+                            {% else %}
+                                <img src="/media/default_profile.png" alt="Profile" style="width:35px; height:35px; border-radius:50%; object-fit:cover;">
+                            {% endif %}
+                        </td>
+                        <td>{{ member.user.name }}</td>
+                        <td><a href="mailto:{{ member.user.email }}">{{ member.user.email }}</a></td>
+                        <td>{{ member.student_id }}</td>
+                        <td>{{ member.department }}</td>
+                        <td>{{ member.session.year }}</td>
+                        <td>{{ member.position|title }}</td>
+                        <td>{{ member.status|title }}</td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="9" style="text-align:center;">No members found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+</div>
+{% endblock %}

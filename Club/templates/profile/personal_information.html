@@ -1,0 +1,169 @@
+{% extends "profile/profile_index.html" %}
+{% load static %}
+
+{% block personal_active %}active{% endblock %}
+
+{% block profile_content %}
+<style>
+/* Container */
+.profile-container {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 2rem;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4ebf5 100%);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Profile Photo */
+.profile-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #6366f1;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.profile-photo:hover {
+    transform: scale(1.05);
+}
+
+/* Username */
+.username {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 0.5rem;
+}
+
+/* Email */
+.email {
+    color: #6b7280;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+/* Upload Button */
+.upload-btn, .edit-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-btn {
+    background: #6366f1;
+    margin-right: 0.5rem;
+}
+
+.upload-btn:hover {
+    background: #4f46e5;
+}
+
+.edit-btn {
+    background: #10b981;
+}
+
+.edit-btn:hover {
+    background: #059669;
+}
+
+/* Hidden File Input */
+input[type="file"] {
+    display: none;
+}
+
+/* Custom File Label */
+label.upload-label {
+    cursor: pointer;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: 2px dashed #6366f1;
+    color: #6366f1;
+    transition: all 0.3s ease;
+}
+
+label.upload-label:hover {
+    background: #6366f1;
+    color: #fff;
+}
+
+/* Info Card */
+.info-card {
+    text-align: left;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+}
+
+.info-card strong {
+    width: 140px;
+    display: inline-block;
+    color: #111827;
+}
+
+.info-card span {
+    color: #4b5563;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .profile-container {
+        padding: 1rem;
+    }
+    .info-card strong {
+        width: 100px;
+    }
+}
+</style>
+
+<div class="profile-container">
+
+    <!-- Profile Photo -->
+    <img 
+        src="{% if member.profile_picture %}{{ member.profile_picture.url }}{% else %}{% static 'default_profile.png' %}{% endif %}" 
+        alt="Profile Photo" 
+        class="profile-photo"
+    >
+
+
+
+    <!-- Email -->
+    <div class="email">{{ member.user.email }}</div>
+
+    <!-- Upload Form -->
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.profile_picture }}
+        <label for="{{ form.profile_picture.id_for_label }}" class="upload-label">Change Profile Photo</label>
+        <button type="submit" class="upload-btn">Upload</button>
+    </form>
+
+    <!-- Info Card -->
+    <div class="info-card">
+        <p><strong>Full Name:</strong> <span>{{ member.user.name }}</span></p>
+        <p><strong>Student ID:</strong> <span>{{ member.student_id }}</span></p>
+        <p><strong>Department:</strong> <span>{{ member.department }}</span></p>
+        <p><strong>Position:</strong> <span>{{ member.position|title }}</span></p>
+        <p><strong>Status:</strong> <span>{{ member.status|title }}</span></p>
+        <p><strong>Session:</strong> <span>{{ member.session.year }}</span></p>
+    </div>
+
+    <!-- Edit Personal Info -->
+    <a href="{% url 'edit_personal_information' %}" class="edit-btn">Edit Personal Information</a>
+
+</div>
+{% endblock %}

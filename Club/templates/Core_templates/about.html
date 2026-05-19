@@ -1,0 +1,112 @@
+{% extends "Core_templates/index.html" %}
+
+{% block title %}About - ICE Programming Club{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* About Page Specific Styles */
+    #about {
+        padding: 3rem 0;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 3rem;
+        color: var(--dark-color);
+    }
+
+    .about-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 4rem;
+    }
+
+    .about-text h3 {
+        margin: 1.5rem 0 1rem;
+        color: var(--dark-color);
+    }
+
+    .about-text ul {
+        list-style-position: inside;
+        margin: 1rem 0;
+    }
+
+    .about-text li {
+        margin-bottom: 0.5rem;
+    }
+
+    .about-stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: var(--radius);
+        text-align: center;
+        box-shadow: var(--shadow);
+    }
+
+    .stat-card h4 {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+    }
+
+    @media (max-width: 768px) {
+        .about-content {
+            grid-template-columns: 1fr;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="about">
+    <div class="container">
+        <h2 class="section-title">About ICE Programming Club</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Our Mission</h3>
+                <p>The ICE Programming Club is dedicated to fostering a vibrant community of passionate programmers. We aim to enhance coding skills, promote innovation, and prepare members for successful careers in technology.</p>
+                
+                <h3>What We Do</h3>
+                <ul>
+                    <li>Organize coding workshops and bootcamps</li>
+                    <li>Host competitive programming contests</li>
+                    <li>Facilitate collaborative project development</li>
+                    <li>Connect students with industry professionals</li>
+                    <li>Prepare members for technical interviews</li>
+                </ul>
+                
+                <h3>Club History</h3>
+                <p>Founded in 2018, the ICE Programming Club has grown to become one of the most active technical clubs on campus, with over 200 active members and numerous successful alumni in top tech companies.</p>
+            </div>
+            <div class="about-stats">
+                <div class="stat-card">
+                    <h4>200+</h4>
+                    <p>Active Members</p>
+                </div>
+                <div class="stat-card">
+                    <h4>50+</h4>
+                    <p>Events Hosted</p>
+                </div>
+                <div class="stat-card">
+                    <h4>30+</h4>
+                    <p>Projects Completed</p>
+                </div>
+                <div class="stat-card">
+                    <h4>15+</h4>
+                    <p>Competitions Won</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

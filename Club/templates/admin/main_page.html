@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page CMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f3f4f6; margin:0; padding:20px; }
+        h1 { color: #1e40af; margin-bottom:10px; }
+        p.description { color:#555; margin-bottom:30px; }
+
+        .admin-section {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .admin-section h3 { margin-bottom: 15px; color: #1e40af; }
+        label { display:block; font-weight:600; margin-top:10px; }
+        input[type="text"], textarea, input[type="file"] {
+            width:100%;
+            padding:8px 12px;
+            margin-top:5px;
+            border-radius:5px;
+            border:1px solid #cbd5e1;
+            font-size:14px;
+        }
+
+        .btn-save {
+            background: #1e40af;
+            color:white;
+            padding:10px 20px;
+            border-radius:6px;
+            border:none;
+            cursor:pointer;
+            font-weight:600;
+            margin-top:20px;
+        }
+        .btn-save:hover { opacity:0.9; }
+
+        .img-preview { margin-top:10px; max-width:200px; border-radius:5px; border:1px solid #cbd5e1; }
+    </style>
+</head>
+<body>
+
+    <h1>Main Page Management</h1>
+    <p class="description">Edit the content for Hero, About, Mission & Vision sections</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- HERO SECTION -->
+        <div class="admin-section">
+            <h3>Hero Section</h3>
+            <label for="id_hero_title">Hero Title</label>
+            {{ form.hero_title }}
+
+            <label for="id_hero_text">Hero Text</label>
+            {{ form.hero_text }}
+
+            <label for="id_hero_image">Hero Image</label>
+            {{ form.hero_image }}
+            {% if content.hero_image %}
+                <img src="{{ content.hero_image.url }}" alt="Hero Image" class="img-preview">
+            {% endif %}
+        </div>
+
+        <!-- ABOUT SECTION -->
+        <div class="admin-section">
+            <h3>About Section</h3>
+            <label for="id_about_text">About Text</label>
+            {{ form.about_text }}
+        </div>
+
+        <!-- MISSION SECTION -->
+        <div class="admin-section">
+            <h3>Mission Section</h3>
+            <label for="id_mission_text">Mission Text</label>
+            {{ form.mission_text }}
+        </div>
+
+        <!-- VISION SECTION -->
+        <div class="admin-section">
+            <h3>Vision Section</h3>
+            <label for="id_vision_text">Vision Text</label>
+            {{ form.vision_text }}
+        </div>
+
+        <button type="submit" class="btn-save">Save Changes</button>
+    </form>
+
+</body>
+</html>

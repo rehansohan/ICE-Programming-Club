@@ -1,0 +1,13 @@
+{% extends "navbar.html" %}
+{% block title %}{{ member.user.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ member.user.name }}</h1>
+<img src="{{ member.user.profile_picture.url }}" width="150px">
+<p>Codeforces: {{ member.cf_rating }}</p>
+<p>Codechef: {{ member.cc_rating }}</p>
+<p>Atcoder: {{ member.at_rating }}</p>
+<p>Bio: {{ member.bio }}</p>
+<p>LinkedIn: <a href="{{ member.linkedin }}">{{ member.linkedin }}</a></p>
+<a href="javascript:history.back()">Go Back</a>
+{% endblock %}

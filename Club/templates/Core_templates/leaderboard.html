@@ -1,0 +1,62 @@
+{% extends "Core_templates/index.html" %}
+
+{% block title %}Leaderboard | ICE Programming Club{% endblock %}
+
+{% block content %}
+<style>
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.page-subtitle {
+    color: #6b7280;
+    margin-bottom: 30px;
+}
+
+.leaderboard-links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.leaderboard-links a {
+    display: block;
+    width: 300px;
+    padding: 15px;
+    background: #2563eb;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background 0.3s;
+    text-align: center;
+}
+
+.leaderboard-links a:hover {
+    background: #1e40af;
+}
+</style>
+
+<div class="container">
+    <h1 class="page-title">Leaderboard</h1>
+    <p class="page-subtitle">View members’ rankings on different competitive programming platforms</p>
+
+    <div class="leaderboard-links">
+        <a href="{% url 'codeforces_members' %}">Codeforces Leaderboard</a>
+        <a href="#">CodeChef Leaderboard</a>
+        <a href="#">LeetCode Leaderboard</a>
+    </div>
+</div>
+{% endblock %}

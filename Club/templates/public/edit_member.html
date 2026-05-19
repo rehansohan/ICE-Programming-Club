@@ -1,0 +1,18 @@
+{% extends "navbar.html" %}
+{% block title %}Edit Member | ICE Programming Club{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">Edit Member: {{ member.name }}</h1>
+
+    <form method="post" enctype="multipart/form-data" style="max-width:600px; margin:auto;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="connect-btn" style="background:#10b981;">Update Member</button>
+    </form>
+
+    <div style="margin-top:20px;">
+        <a href="{% url 'admin_community' %}" class="connect-btn">Back to Community</a>
+    </div>
+</div>
+{% endblock %}

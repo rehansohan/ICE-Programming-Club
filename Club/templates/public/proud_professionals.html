@@ -1,0 +1,189 @@
+{% extends "navbar.html" %}
+{% load static %}
+
+{% block title %}Our Proud Professionals | ICE Programming Club{% endblock %}
+
+{% block content %}
+<style>
+body {
+    background: #f8fafc;
+    font-family: Arial, sans-serif;
+}
+
+/* ===== PAGE CONTAINER ===== */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+/* ===== HEADER ===== */
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    color: #1e293b;
+    margin-bottom: 5px;
+}
+.page-subtitle {
+    font-size: 1rem;
+    color: #64748b;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* ===== CARD GRID ===== */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@media(max-width: 900px){
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media(max-width: 600px){
+    .card-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== CARD ===== */
+.professional-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 22px 16px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    border: 1px solid #e2e8f0;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.professional-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+}
+
+/* ===== AVATAR ===== */
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #2563eb;
+    margin-bottom: 12px;
+}
+
+/* ===== TEXT ===== */
+.name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 2px;
+}
+
+.job {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #2563eb;
+}
+
+.company {
+    font-size: 0.85rem;
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.meta {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.bio {
+    font-size: 0.8rem;
+    color: #374151;
+    margin: 10px 0 14px;
+}
+
+/* ===== SOCIAL ===== */
+.links a {
+    display: inline-block;
+    margin: 0 6px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #2563eb;
+    transition: color 0.3s;
+}
+.links a:hover { color: #1d4ed8; }
+
+@media(max-width:600px){
+    .avatar { width: 80px; height: 80px; }
+}
+</style>
+
+<div class="container">
+    <h1 class="page-title">Our Proud Professionals</h1>
+    <p class="page-subtitle">
+        Alumni excelling in competitive programming and tech
+    </p>
+
+    <div class="card-grid">
+        {% for member, job in member_jobs.items %}
+        <div class="professional-card">
+
+            <!-- AVATAR -->
+            <img
+                src="{% if member.profile_picture %}{{ member.profile_picture.url }}{% else %}{% static 'default_profile.png' %}{% endif %}"
+                alt="{{ member.name }}"
+                class="avatar"
+            >
+
+            <!-- NAME -->
+            <div class="name">{{ member.name }}</div>
+
+            <!-- JOB TITLE -->
+            <div class="job">
+                {{ job.job_title|default:"Professional" }}
+            </div>
+
+            <!-- COMPANY NAME -->
+            {% if job.company_name %}
+            <div class="company">
+                {{ job.company_name }}
+            </div>
+            {% endif %}
+
+            <!-- SESSION -->
+            <div class="meta">
+                Session {{ member.session.year }}
+            </div>
+
+            <!-- BIO -->
+            <div class="bio">
+                {{ member.bio|default:"No bio available." }}
+            </div>
+
+            <!-- LINKS -->
+            <div class="links">
+                {% if member.github %}
+                    <a href="{{ member.github }}" target="_blank" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                {% endif %}
+                {% if member.linkedin %}
+                    <a href="{{ member.linkedin }}" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                {% endif %}
+            </div>
+
+        </div>
+        {% empty %}
+        <p style="text-align:center;color:#64748b;">
+            No professionals available.
+        </p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- FontAwesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}

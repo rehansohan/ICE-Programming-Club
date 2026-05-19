@@ -1,0 +1,158 @@
+{% extends "profile/profile_index.html" %}
+{% load static %}
+{% block personal_active %}active{% endblock %}
+
+{% block profile_content %}
+<style>
+/* Container */
+.profile-container{
+    max-width:650px;
+    margin:3rem auto;
+    padding:2.5rem;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+.profile-title{
+    text-align:center;
+    font-size:1.8rem;
+    font-weight:700;
+    margin-bottom:1.8rem;
+    color:#1f2937;
+}
+.profile-photo{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    border:3px solid #4f46e5;
+    object-fit:cover;
+    display:block;
+    margin:0 auto 1.5rem;
+}
+/* Messages */
+.message-list{
+    list-style:none;
+    padding:0;
+    margin-bottom:1.5rem;
+}
+.message-list li{
+    font-size:.95rem;
+    padding:.5rem 0;
+}
+.message-list .error{color:#dc2626;}
+.message-list .success{color:#16a34a;}
+
+/* Form */
+.form-group{margin-bottom:1.4rem;}
+.form-group label{
+    display:block;
+    font-weight:600;
+    margin-bottom:.4rem;
+    color:#374151;
+}
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:.85rem 1rem;
+    border-radius:8px;
+    border:1.8px solid #d1d5db;
+    background:#f9fafb;
+    font-size:.95rem;
+}
+.form-group input:focus,
+.form-group select:focus{
+    outline:none;
+    border-color:#4f46e5;
+    background:#fff;
+}
+.form-group input[readonly]{
+    background:#f3f4f6;
+    cursor:not-allowed;
+}
+
+/* Submit button */
+.submit-btn{
+    width:100%;
+    padding:.8rem;
+    margin-top:1rem;
+    background:#4f46e5;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    font-weight:600;
+    font-size:1rem;
+    cursor:pointer;
+    transition:all 0.25s ease;
+}
+.submit-btn:hover{
+    background:#6366f1;
+}
+</style>
+
+<div class="profile-container">
+    <h2 class="profile-title">Edit Personal Information</h2>
+
+    <!-- Profile photo -->
+    <img src="{% if member.profile_picture %}{{ member.profile_picture.url }}{% else %}{% static 'default_profile.png' %}{% endif %}" 
+         alt="Profile Photo" class="profile-photo">
+
+    <!-- Messages -->
+    {% if messages %}
+    <ul class="message-list">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <!-- Form -->
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Name -->
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" name="name" value="{{ member.user.name }}">
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" value="{{ member.user.email }}">
+        </div>
+
+        <!-- Student ID (Readonly for everyone) -->
+        <div class="form-group">
+            <label>Student ID</label>
+            <input type="text" value="{{ member.student_id }}" readonly>
+        </div>
+
+        <!-- Department -->
+        <div class="form-group">
+            <label>Department</label>
+            {% if request.user.is_staff %}
+            <input type="text" name="department" value="{{ member.department }}">
+            {% else %}
+            <input type="text" value="{{ member.department }}" readonly>
+            {% endif %}
+        </div>
+
+        <!-- Session -->
+        <div class="form-group">
+            <label>Session</label>
+            {% if request.user.is_staff %}
+            <select name="session">
+                {% for s in sessions %}
+                    <option value="{{ s.id }}" {% if member.session.id == s.id %}selected{% endif %}>{{ s.year }}</option>
+                {% endfor %}
+            </select>
+            {% else %}
+            <input type="text" value="{{ member.session.year }}" readonly>
+            {% endif %}
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="submit-btn">Save Changes</button>
+    </form>
+</div>
+{% endblock %}

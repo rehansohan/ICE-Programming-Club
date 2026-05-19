@@ -1,0 +1,28 @@
+{% extends "navbar.html" %}
+{% block title %}{{ member.name }} | ICE Programming Club{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">{{ member.name }}</h1>
+    <h3 class="section-title">{{ member.role.name }} - {{ member.year }}</h3>
+
+    <div class="community-card" style="max-width:400px; margin:auto;">
+        <div class="card-header">
+            {% if member.image %}
+                <img src="{{ member.image.url }}" class="community-avatar" alt="{{ member.name }}">
+            {% else %}
+                <img src="https://via.placeholder.com/100" class="community-avatar" alt="{{ member.name }}">
+            {% endif %}
+            <div class="community-bio" style="margin-top:10px;">{{ member.bio }}</div>
+        </div>
+        <div class="social-links">
+            {% if member.linkedin %}<a href="{{ member.linkedin }}">LinkedIn</a>{% endif %}
+            {% if member.email %}<a href="mailto:{{ member.email }}">Email</a>{% endif %}
+        </div>
+    </div>
+
+    <div style="margin-top:20px;">
+        <a href="{% url 'community' %}" class="connect-btn">Back to Community</a>
+    </div>
+</div>
+{% endblock %}

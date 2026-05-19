@@ -1,0 +1,84 @@
+{% extends "navbar.html" %}
+{% block title %}View Notice | ICE Programming Club{% endblock %}
+
+{% block content %}
+<style>
+    .notice-container {
+        max-width: 700px;
+        margin: 50px auto;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 30px 40px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05), 0 20px 48px rgba(0,0,0,0.03);
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .notice-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 15px;
+    }
+
+    .notice-description {
+        font-size: 16px;
+        color: #475569;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .notice-date {
+        font-size: 14px;
+        color: #64748b;
+        font-style: italic;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #2563eb;
+        color: white;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .back-link:hover {
+        background: #1d4ed8;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+    }
+
+    @media (max-width: 600px) {
+        .notice-container {
+            padding: 20px;
+            margin: 30px 15px;
+        }
+
+        .notice-title {
+            font-size: 22px;
+        }
+
+        .notice-description {
+            font-size: 15px;
+        }
+    }
+</style>
+
+<div class="notice-container">
+    <h2 class="notice-title">{{ notice.title }}</h2>
+    <p class="notice-description">{{ notice.description }}</p>
+    <small class="notice-date">Published on: {{ notice.date }}</small>
+
+    <br><br>
+    <a href="{% url 'home' %}" class="back-link">⬅ Back to Notice Board</a>
+</div>
+{% endblock %}

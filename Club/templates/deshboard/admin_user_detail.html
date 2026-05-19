@@ -1,0 +1,201 @@
+{% extends "navbar.html" %}
+{% load static %}
+
+{% block title %}{{ user.name }} - Profile{% endblock %}
+
+{% block content %}
+<style>
+/* Container */
+.profile-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+}
+
+/* Header */
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.profile-header h1 {
+    font-size: 2rem;
+    color: #007bff;
+}
+
+/* Buttons */
+.btn-edit {
+    padding: 8px 15px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+.btn-edit:hover {
+    background: #0056b3;
+}
+
+/* Profile Picture */
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #007bff;
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
+/* Card Sections */
+.card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.05);
+}
+
+.card h2 {
+    color: #007bff;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.card ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.card li {
+    margin-bottom: 12px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+}
+
+/* Collapsible toggle */
+.collapse-content {
+    display: block;
+    margin-top: 10px;
+}
+</style>
+
+<div class="profile-container">
+
+    <!-- Header with Edit Button -->
+
+
+    <!-- Profile Picture -->
+    {% if member and member.profile_picture %}
+        <img src="{{ member.profile_picture.url }}" alt="Profile Picture" class="profile-pic">
+    {% else %}
+        <img src="{% static 'default_profile.png' %}" alt="Profile Picture" class="profile-pic">
+    {% endif %}
+
+    <!-- Basic Info -->
+    <div class="card">
+        <h2 onclick="toggleCollapse('basic-info')">Basic Info ▼</h2>
+        <div id="basic-info" class="collapse-content">
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Phone:</strong> {{ user.phone_number|default:"N/A" }}</p>
+            <p><strong>Gender:</strong> {{ user.get_gender_display|default:"N/A" }}</p>
+            <p><strong>Birthday:</strong> {{ user.birthday|default:"N/A" }}</p>
+            <p><strong>Date Joined:</strong> {{ user.date_joined|date:"F j, Y" }}</p>
+        </div>
+    </div>
+
+    <!-- Member Info -->
+    {% if member %}
+    <div class="card">
+        <h2 onclick="toggleCollapse('member-info')">Member Info ▼</h2>
+        <div id="member-info" class="collapse-content">
+            <p><strong>Student ID:</strong> {{ member.student_id }}</p>
+            <p><strong>Department:</strong> {{ member.department }}</p>
+            <p><strong>Position:</strong> {{ member.get_position_display }}</p>
+            <p><strong>Status:</strong> {{ member.get_status_display }}</p>
+            <p><strong>Verified:</strong> {{ member.is_verified }}</p>
+            <p><strong>Bio:</strong> {{ member.bio|default:"N/A" }}</p>
+            <p><strong>Skills:</strong> {{ member.skills|default:"N/A" }}</p>
+            <p><strong>Github:</strong> <a href="{{ member.github }}" target="_blank">{{ member.github|default:"N/A" }}</a></p>
+            <p><strong>LinkedIn:</strong> <a href="{{ member.linkedin }}" target="_blank">{{ member.linkedin|default:"N/A" }}</a></p>
+            <p><strong>Codeforces:</strong> {{ member.codeforces_handle|default:"N/A" }} (Rating: {{ member.cf_rating }})</p>
+            <p><strong>Codechef:</strong> {{ member.codechef_handle|default:"N/A" }} (Rating: {{ member.cc_rating }})</p>
+            <p><strong>Atcoder:</strong> {{ member.atcoder_handle|default:"N/A" }} (Rating: {{ member.at_rating }})</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Job Profiles -->
+    <div class="card">
+        <h2 onclick="toggleCollapse('job-profiles')">Job Profiles ▼</h2>
+        <div id="job-profiles" class="collapse-content">
+            {% if job_profiles %}
+            <ul>
+                {% for job in job_profiles %}
+                <li>
+                    <strong>{{ job.job_title }}</strong> at {{ job.company_name }} ({{ job.get_job_type_display }})<br>
+                    Skills: {{ job.skills }}<br>
+                    Description: {{ job.description|default:"N/A" }}<br>
+                    Start Date: {{ job.start_date|date:"F j, Y"|default:"N/A" }} | Current: {{ job.is_current }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No job profiles</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="card">
+        <h2 onclick="toggleCollapse('skills')">Skills ▼</h2>
+        <div id="skills" class="collapse-content">
+            {% if skills %}
+            <ul>
+                {% for skill in skills %}
+                <li>{{ skill.skill_name }} - {{ skill.experience }}<br>{{ skill.description|default:"N/A" }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No skills added</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Addresses -->
+    <div class="card">
+        <h2 onclick="toggleCollapse('addresses')">Addresses ▼</h2>
+        <div id="addresses" class="collapse-content">
+            {% if addresses %}
+            <ul>
+                {% for addr in addresses %}
+                <li>
+                    <strong>{{ addr.get_address_type_display }}:</strong> 
+                    {{ addr.street|default:"" }}, {{ addr.city|default:"" }}, {{ addr.state|default:"" }}, {{ addr.country|default:"" }} - {{ addr.postal_code|default:"" }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No addresses</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+<script>
+function toggleCollapse(id){
+    const el = document.getElementById(id);
+    if(el.style.display === "none"){
+        el.style.display = "block";
+    } else {
+        el.style.display = "none";
+    }
+}
+</script>
+
+{% endblock %}

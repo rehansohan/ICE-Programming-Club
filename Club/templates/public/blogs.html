@@ -1,0 +1,209 @@
+{% extends "navbar.html" %}
+
+{% block title %}News & Updates | ICE Programming Club{% endblock %}
+
+{% block content %}
+<style>
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #3730a3;
+    --accent: #10b981;
+    --gray: #6b7280;
+    --light-gray: #f3f4f6;
+    --white: #ffffff;
+    --radius: 12px;
+    --transition: all 0.3s ease;
+    --shadow: 0 6px 18px rgba(0,0,0,0.08);
+    --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+body {
+    background: var(--light-gray);
+    font-family: 'Poppins', sans-serif;
+    color: var(--gray);
+}
+
+/* ===== Container & Header ===== */
+.container {
+    max-width: 1100px;
+    margin: 80px auto 40px;
+    padding: 0 20px;
+}
+
+.page-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: var(--gray);
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+/* ===== Section Titles ===== */
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 25px;
+    border-left: 4px solid var(--accent);
+    padding-left: 0.5rem;
+    display: inline-block;
+}
+
+/* ===== Blog Grid ===== */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 60px;
+}
+
+/* ===== Blog Card ===== */
+.blog-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ===== Blog Image ===== */
+.blog-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+/* ===== Blog Content ===== */
+.blog-content {
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.blog-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.blog-excerpt {
+    font-size: 0.9rem;
+    color: var(--gray);
+    flex: 1;
+}
+
+.blog-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0;
+}
+
+.tag {
+    background: #e0f2fe;
+    color: #0284c7;
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.tag:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* ===== Blog Buttons ===== */
+.blog-btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+.blog-btn {
+    padding: 6px 14px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+.blog-btn:hover {
+    background: var(--primary-dark);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<div class="container">
+    <h1 class="page-title">Our News & Updates</h1>
+    <p class="page-subtitle">Stay updated with the latest activities, articles, and announcements from ICE Programming Club</p>
+
+    <div class="blog-section">
+        <h2 class="section-title">Latest News</h2>
+        <div class="blog-grid">
+            {% for i in "1234"|make_list %}
+            <div class="blog-card">
+                <img src="https://source.unsplash.com/600x400/?technology,programming,{{ forloop.counter }}" class="blog-image" alt="Blog {{ forloop.counter }}">
+                <div class="blog-content">
+                    <div class="blog-title">Blog Post {{ forloop.counter }}: How to Learn Python Fast</div>
+                    <div class="blog-excerpt">A concise guide to quickly learning Python programming and applying it to real-world projects.</div>
+                    <div class="blog-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Beginner</span>
+                        <span class="tag">Tutorial</span>
+                    </div>
+                    <div class="blog-btns">
+                        <a href="#" class="blog-btn">Read More</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="blog-section">
+        <h2 class="section-title">Community Updates</h2>
+        <div class="blog-grid">
+            {% for i in "123"|make_list %}
+            <div class="blog-card">
+                <img src="https://source.unsplash.com/600x400/?community,event,{{ forloop.counter }}" class="blog-image" alt="Update {{ forloop.counter }}">
+                <div class="blog-content">
+                    <div class="blog-title">Event {{ forloop.counter }}: Hackathon Recap</div>
+                    <div class="blog-excerpt">Highlights and outcomes from our recent club hackathon, including winners and projects.</div>
+                    <div class="blog-tags">
+                        <span class="tag">Event</span>
+                        <span class="tag">Hackathon</span>
+                    </div>
+                    <div class="blog-btns">
+                        <a href="#" class="blog-btn">Read More</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

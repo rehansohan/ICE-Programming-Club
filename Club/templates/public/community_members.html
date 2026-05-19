@@ -1,0 +1,167 @@
+{% extends "navbar.html" %}
+{% block title %}Community Members | ICE Programming Club{% endblock %}
+
+{% block content %}
+<style>
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.page-subtitle {
+    color: #6b7280;
+    margin-bottom: 30px;
+}
+
+/* Search bar */
+#memberSearch {
+    padding: 10px;
+    width: 250px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    margin-bottom: 20px;
+}
+
+/* Grid */
+.community-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+/* Card */
+.community-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 280px;
+    transition: transform 0.2s;
+}
+
+.community-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    background: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+}
+
+.community-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #10b981;
+}
+
+.card-body {
+    padding: 15px;
+    text-align: center;
+}
+
+.community-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 5px 0;
+}
+
+.community-role,
+.community-year,
+.community-dept,
+.community-phone {
+    font-size: 0.9rem;
+    color: #4b5563;
+    margin: 2px 0;
+}
+
+.community-bio {
+    font-size: 0.9rem;
+    color: #374151;
+    margin-top: 8px;
+}
+
+.card-footer {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.card-footer a {
+    text-decoration: none;
+    color: #2563eb;
+    font-weight: 500;
+}
+</style>
+
+<div class="container">
+    <h1 class="page-title">Our Community Members</h1>
+    <p class="page-subtitle">Filter members by year or role</p>
+
+    <!-- Search bar -->
+    <input type="text" id="memberSearch" placeholder="Search by year or role..." />
+
+    <!-- Community Grid -->
+    <div class="community-grid" id="communityGrid">
+        {% for role in roles_with_members %}
+            {% for member in role.members.all %}
+            <div class="community-card" data-year="{{ member.year }}" data-role="{{ role.name }}">
+                <div class="card-header">
+                    <img src="{% if member.image %}{{ member.image.url }}{% else %}/static/images/default_avatar.png{% endif %}" 
+                         class="community-avatar" alt="{{ member.name }}">
+                </div>
+                <div class="card-body">
+                    <h3 class="community-name">{{ member.name }}</h3>
+                    <p class="community-role">{{ role.name }}</p>
+                    <p class="community-year">Year: {{ member.year }}</p>
+                    {% if member.department %}<p class="community-dept">Department: {{ member.department }}</p>{% endif %}
+                    {% if member.phone %}<p class="community-phone">Phone: {{ member.phone }}</p>{% endif %}
+                    <p class="community-bio">{{ member.bio|default:"No bio available." }}</p>
+                </div>
+                <div class="card-footer">
+                    {% if member.linkedin %}<a href="{{ member.linkedin }}" target="_blank">LinkedIn</a>{% endif %}
+                    {% if member.email %}<a href="mailto:{{ member.email }}">Email</a>{% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+const searchInput = document.getElementById('memberSearch');
+const communityCards = document.querySelectorAll('.community-card');
+
+searchInput.addEventListener('input', function() {
+    const filter = this.value.toLowerCase();
+
+    communityCards.forEach(card => {
+        const year = card.getAttribute('data-year').toLowerCase();
+        const role = card.getAttribute('data-role').toLowerCase();
+
+        if(year.includes(filter) || role.includes(filter)) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %}

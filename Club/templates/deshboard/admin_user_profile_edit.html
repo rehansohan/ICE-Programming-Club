@@ -1,0 +1,127 @@
+{% extends "navbar.html" %}
+{% load static %}
+
+{% block title %}Edit {{ user.name }}{% endblock %}
+
+{% block content %}
+
+<style>
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f6f8;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #1f2937;
+    margin-bottom: 30px;
+}
+
+form {
+    max-width: 900px;
+    margin: auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+h2 {
+    color: #007bff;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 5px;
+}
+
+/* Form fields */
+input, select, textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Boxes */
+.section-box {
+    background: #f9fafb;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+button {
+    background: #111827;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    display: block;
+    margin: 20px auto 0 auto;
+}
+
+button:hover {
+    background: #374151;
+}
+
+/* Optional fields notice */
+.optional {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+/* Responsive flex for multiple fields */
+.flex-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.flex-row .field {
+    flex: 1 1 45%;
+}
+</style>
+
+<h1>Edit {{ user.name }}</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- User Info -->
+    <h2>User Info</h2>
+    <div class="section-box">
+        {{ user_form.as_p }}
+        <p class="optional">All fields are optional</p>
+    </div>
+
+    <!-- Member Info -->
+    <h2>Member Info</h2>
+    <div class="section-box">
+        {{ member_form.as_p }}
+        <p class="optional">All fields are optional</p>
+    </div>
+
+
+    <button type="submit">Save All Changes</button>
+</form>
+
+{% endblock %}

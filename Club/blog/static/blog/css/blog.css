@@ -1,0 +1,17 @@
+:root{
+  --brand:#05386b; /* dark blue */
+  --accent:#379683;
+}
+body[data-theme='dark']{
+  background:#0a1b2a;color:#fff
+}
+.navbar-brand{font-weight:700}
+.hero{background:linear-gradient(90deg, rgba(5,56,107,0.06), rgba(55,150,131,0.03))}
+.card{border:0}
+.empty-state{color:#6c757d}
+.badge-primary{background:var(--brand)}
+.btn-primary{background:var(--brand);border-color:var(--brand)}
+
+/* small transitions */
+.card, .btn {transition:transform .12s ease, box-shadow .12s ease}
+.card:hover{transform:translateY(-4px);box-shadow:0 10px 20px rgba(2,6,23,0.08)}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}ICE Programming Club{% endblock %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+{% include 'includes/navbar_head.html' %}
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+{% include 'includes/navbar_fragment.html' %}
+
+<!-- ================= MAIN LAYOUT ================= -->
+<div class="layout" id="layout">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar-left">
+        <a class="nav-item" href="{% url 'home'%}"><span>Home</span><i class="fas fa-angle-right"></i></a>
+        <a class="nav-item" href="{% url 'home' %}#about-section"><span>About</span><i class="fas fa-angle-right"></i></a>
+        <a class="nav-item" href="{% url 'home' %}#contact-section"><span>Contact Us</span><i class="fas fa-angle-right"></i></a>
+        <a class="nav-item" href="{% url 'home' %}#mission-vision-section"><span>Our Mission & Vision</span><i class="fas fa-angle-right"></i></a>
+        <a class="nav-item" href="{% url 'leaderboard'%}"><span>Leaderboard</span><i class="fas fa-angle-right"></i></a>
+        <a class="nav-item" href="{% url 'learning'%}"><span>Resources / Learning</span><i class="fas fa-angle-right"></i></a>
+        <a class="nav-item" href="{% url 'proud_professionals'%}"><span>Career Highlight</span><i class="fas fa-angle-right"></i></a>
+        <a class="nav-item" href="{% url 'show_community'%}"><span>Community Members</span><i class="fas fa-angle-right"></i></a>
+        <a class="nav-item" href=""><span>Faculty Members</span><i class="fas fa-angle-right"></i></a>
+        <div style="height:400px;padding:20px;color:#aaa;">
+            More menu items...
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+    {% block footer %}© 2026 ICE Programming Club · NSTU{% endblock %}
+</footer>
+
+<script>
+function toggleMenu(){
+    document.getElementById("layout").classList.toggle("collapsed");
+}
+</script>
+
+</body>
+</html>

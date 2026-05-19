@@ -1,0 +1,18 @@
+{% extends "navbar.html" %}
+{% block title %}Add Member | ICE Programming Club{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">Add New Member</h1>
+
+    <form method="post" enctype="multipart/form-data" style="max-width:600px; margin:auto;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="connect-btn">Add Member</button>
+    </form>
+
+    <div style="margin-top:20px;">
+        <a href="{% url 'community' %}" class="connect-btn">Back to Community</a>
+    </div>
+</div>
+{% endblock %}
