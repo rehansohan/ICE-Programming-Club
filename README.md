@@ -148,45 +148,32 @@ ICE-Programming-Club/
 
 ## Screenshots
 
-###  Home Page
 
-![Home](images/home.png)
+## Screenshots
 
----
+### Home Page
+![Home Page](images/home.png)
 
-###  Member Profile
-
+### Member Profile
 ![Member Profile](images/user_profile.png)
 
----
-
-###  Career Highlights
-
+### Career Highlights
 ![Career Highlights](images/job_profile.png)
 
----
+### Competitive Programming Statistics
+![Programming Statistics](images/leaderboard.png)
 
-###  Competitive Programming Statistics
-![Programming plartform](images/leaderboard.png)
+### Codeforces Statistics
+![Codeforces Statistics](images/codeforces.png)
 
-![Programming Statistics](images/codeforces.png)
+### Community
+![Community](images/commity.png)
 
----
-### Our Committee Members
+### Notices
+![Notices](images/notice.png)
 
-![committee](images/commity.png)
-
-###  Club Notices
-
-![Club Notices](images/notice.png)
-![Club Notices details](images/notice_details.png)
-
-
----
-
-###  Django Admin Panel
-
-![Admin Panel](images/admin.png)
+### Notice Details
+![Notice Details](images/notice_details.png)
 
 ---
 
